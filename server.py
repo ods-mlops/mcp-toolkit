@@ -37,5 +37,21 @@ def summarize_text(text: str) -> str:
     
     return message.content[0].text
 
+@mcp.tool()
+def extract_action_items(text: str) -> str:
+    """Extracts a numbered list of clear action items from a block of text."""
+    
+    message = client.messages.create(
+        model="claude-haiku-4-5-20251001",
+        max_tokens=1024,
+        system="""You are an expert management consultant. When given a block of text, identify any action items and return a bulleted list of action items, ordered by priority. Be concise, specific, and use direct professional language. Do not use any buzzwords or jargon.""",
+        messages=[
+            {"role": "user", "content": f"Please extract action items from the following text:\n\n{text}"}
+        ]
+    )
+    
+    return message.content[0].text
+
+
 if __name__ == "__main__":
     mcp.run(transport="stdio")
