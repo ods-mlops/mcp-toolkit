@@ -32,18 +32,16 @@ async def main():
                 selected_tool = "summarize_text"
             
             # Get input from the user
-            print("Paste your text below. When done, type END on a new line and press Enter.\n")
-            lines = []
-            while True:
-                line = input()
-                if line.strip() == "END":
-                    break
-                lines.append(line)
+            print("Select a file with the text to be summarized.\n")
+            file_path = input("Provide the path to your file: ")
+
+            with open(file_path, "r") as file:
+                contents = file.read()
             
-            user_text = "\n".join(lines)
+            user_text = contents
             
             if not user_text.strip():
-                print("No text provided. Exiting.")
+                print("No text found in file provided. Exiting.")
                 return
             
             # Call the summarize_text tool on the server
